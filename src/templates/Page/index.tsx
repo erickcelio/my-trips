@@ -1,21 +1,26 @@
-import client from 'graphql/client'
-import { MapProps } from 'components/Map'
-import { GET_PLACES } from 'graphql/queries'
-import HomeTemplate from 'templates/Home'
-import { GetPlacesQuery } from 'graphql/generated/graphql'
+import { CloseOutline } from '@styled-icons/evaicons-outline/CloseOutline'
 
-export default function Home({ places }: MapProps) {
-  return <HomeTemplate places={places} />
+import LinkWrapper from 'components/LinkWrapper'
+
+import * as S from './styles'
+
+export type PageTemplateProps = {
+  heading: string
+  body: string
 }
 
-export const getStaticProps = async () => {
-  const { places } = await client.request<GetPlacesQuery>(GET_PLACES)
-
-  console.log({ places })
-
-  return {
-    props: {
-      places
-    }
-  }
+const PageTemplate = ({ heading, body }: PageTemplateProps) => {
+  return (
+    <S.Content>
+      <LinkWrapper href="/">
+        <CloseOutline size={32} aria-label="Close" />
+      </LinkWrapper>
+      <S.Heading>{heading}</S.Heading>
+      <S.Body>
+        <div dangerouslySetInnerHTML={{ __html: body }} />
+      </S.Body>
+    </S.Content>
+  )
 }
+
+export default PageTemplate
