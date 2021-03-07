@@ -1,5 +1,5 @@
 import { CloseOutline } from '@styled-icons/evaicons-outline/CloseOutline'
-import React from 'react'
+import Image from 'next/image'
 
 import LinkWrapper from 'components/LinkWrapper'
 
@@ -15,7 +15,7 @@ export type PlaceTemplateProps = {
   place: {
     slug: string
     name: string
-    description: {
+    description?: {
       html: string
     }
     gallery: ImageProps[]
@@ -33,12 +33,19 @@ const PlaceTemplate = ({ place }: PlaceTemplateProps) => {
           <S.Heading>{place.name}</S.Heading>
 
           <S.Body
-            dangerouslySetInnerHTML={{ __html: place.description.html }}
+            dangerouslySetInnerHTML={{ __html: place.description?.html || '' }}
           />
 
           <S.Gallery>
             {place.gallery.map((image, index) => (
-              <img key={`photo-${index}`} src={image.url} alt={place.name} />
+              <Image
+                key={`photo-${index}`}
+                src={image.url}
+                alt={place.name}
+                width={1000}
+                height={600}
+                quality={75}
+              />
             ))}
           </S.Gallery>
         </S.Container>
