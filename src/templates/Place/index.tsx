@@ -1,4 +1,9 @@
+import { CloseOutline } from '@styled-icons/evaicons-outline/CloseOutline'
 import React from 'react'
+
+import LinkWrapper from 'components/LinkWrapper'
+
+import * as S from './styles'
 
 export type ImageProps = {
   url: string
@@ -20,11 +25,24 @@ export type PlaceTemplateProps = {
 const PlaceTemplate = ({ place }: PlaceTemplateProps) => {
   return (
     <>
-      <h1>{place.name}</h1>
-      <div dangerouslySetInnerHTML={{ __html: place.description.html }} />
-      {place.gallery.map((image, index) => (
-        <img key={`photo-${index}`} src={image.url} alt={place.name} />
-      ))}
+      <LinkWrapper href="/">
+        <CloseOutline size={32} aria-label="Close" />
+      </LinkWrapper>
+      <S.Wrapper>
+        <S.Container>
+          <S.Heading>{place.name}</S.Heading>
+
+          <S.Body
+            dangerouslySetInnerHTML={{ __html: place.description.html }}
+          />
+
+          <S.Gallery>
+            {place.gallery.map((image, index) => (
+              <img key={`photo-${index}`} src={image.url} alt={place.name} />
+            ))}
+          </S.Gallery>
+        </S.Container>
+      </S.Wrapper>
     </>
   )
 }
